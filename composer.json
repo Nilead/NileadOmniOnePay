@@ -1,0 +1,37 @@
+{
+    "name": "nilead/omni-onepay",
+    "type": "nilead-library",
+    "description": "OnePay gateway for Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "onepay",
+        "noidia",
+        "quocte",
+        "onepay",
+        "payment",
+        "paypal",
+        "purchase"
+    ],
+    "authors": [
+        {
+            "name": "Nilead Team",
+            "email": "support@nilead.com",
+            "homepage": "http://nilead.com"
+        }
+    ],
+    "repositories": [
+        { "type": "composer", "url": "http://satis.nilead.com/" }
+    ],
+    "autoload": {
+        "psr-4": { "Nilead\\OmniOnePay\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    }
+}
