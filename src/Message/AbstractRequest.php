@@ -16,32 +16,32 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getVpcAccessCode()
     {
-        return $this->getParameter('vpc_AccessCode');
+        return $this->getParameter('vpcAccessCode');
     }
 
-    public function setVpcAccessCode($vpc_AccessCode)
+    public function setVpcAccessCode($vpcAccessCode)
     {
-        return $this->setParameter('vpc_AccessCode', $vpc_AccessCode);
+        return $this->setParameter('vpcAccessCode', $vpcAccessCode);
     }
 
     public function getVpcMerchant()
     {
-        return $this->getParameter('vpc_Merchant');
+        return $this->getParameter('vpcMerchant');
     }
 
-    public function setVpcMerchant($vpc_Merchant)
+    public function setVpcMerchant($vpcMerchant)
     {
-        return $this->setParameter('vpc_Merchant', $vpc_Merchant);
+        return $this->setParameter('vpcMerchant', $vpcMerchant);
     }
 
     public function getSecureHash()
     {
-        return $this->getParameter('secure_hash');
+        return $this->getParameter('secureHash');
     }
 
-    public function setSecureHash($secure_hash)
+    public function setSecureHash($secureHash)
     {
-        return $this->setParameter('secure_hash', $secure_hash);
+        return $this->setParameter('secureHash', $secureHash);
     }
 
     public function getVpcSecureHash()
@@ -56,22 +56,22 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function getVpcUser()
     {
-        return $this->getParameter('vpc_User');
+        return $this->getParameter('vpcUser');
     }
 
-    public function setVpcUser($vpc_User)
+    public function setVpcUser($vpcUser)
     {
-        return $this->setParameter('vpc_User', $vpc_User);
+        return $this->setParameter('vpcUser', $vpcUser);
     }
 
     public function getVpcPassword()
     {
-        return $this->getParameter('vpc_Password');
+        return $this->getParameter('vpcPassword');
     }
 
-    public function setVpcPassword($vpc_Password)
+    public function setVpcPassword($vpcPassword)
     {
-        return $this->setParameter('vpc_Password', $vpc_Password);
+        return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
     public function getTransactionReference()
@@ -97,8 +97,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function getBaseData()
     {
         return [
-            'vpc_Merchant' => $this->getVpcMerchant(),
-            'vpc_AccessCode' => $this->getVpcAccessCode(),
+            'vpcMerchant' => $this->getVpcMerchant(),
+            'vpcAccessCode' => $this->getVpcAccessCode(),
         ];
     }
 

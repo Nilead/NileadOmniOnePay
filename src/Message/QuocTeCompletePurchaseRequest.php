@@ -22,7 +22,7 @@ class QuocTeCompletePurchaseRequest extends NoiDiaCompletePurchaseRequest
         $data['vpc_Command'] = 'queryDR'; // method
 
         if (empty($this->getVpcPassword()) && empty($this->getVpcUser())) {
-            throw new InvalidRequestException("The vpc_User or vpc_Password parameter is required");
+            throw new InvalidRequestException("The vpcUser or vpcPassword parameter is required");
         }
 
         $data['vpc_User'] = $this->getVpcUser();
