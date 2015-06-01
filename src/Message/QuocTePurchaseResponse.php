@@ -4,12 +4,12 @@ namespace Nilead\OmniOnePay\Message;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
- * NoiDia IPN Purchase Response
+ * QuocTe Purchase Response
  */
-class NoiDiaIPNPurchaseResponse extends NoiDiaPurchaseResponse implements RedirectResponseInterface
+class QuocTePurchaseResponse extends Response implements RedirectResponseInterface
 {
-    protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/vpc.op';
-    protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
+    protected $liveEndpoint = 'https://onepay.vn/vpcpay/vpcpay.op';
+    protected $testEndpoint = 'https://mtf.onepay.vn/vpcpay/vpcpay.op';
 
     public function isSuccessful()
     {

@@ -78,9 +78,19 @@ class NoiDiaGateway extends AbstractGateway
         return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\OmniOnePay\Message\NoiDiaPurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaPurchaseRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = array())
@@ -90,6 +100,6 @@ class NoiDiaGateway extends AbstractGateway
 
     public function fetchCheckout(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\OmniOnePay\Message\NoiDiaCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaFetchRequest', $parameters);
     }
 }

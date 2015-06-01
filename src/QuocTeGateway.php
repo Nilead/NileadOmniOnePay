@@ -78,9 +78,19 @@ class QuocTeGateway extends AbstractGateway
         return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
+    public function getTestMode()
+    {
+        return $this->getParameter('testMode');
+    }
+
+    public function setTestMode($value)
+    {
+        return $this->setParameter('testMode', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\OmniOnePay\Message\QuocTePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTePurchaseRequest', $parameters);
     }
 
     public function completePurchase(array $parameters = array())
@@ -90,7 +100,7 @@ class QuocTeGateway extends AbstractGateway
 
     public function fetchCheckout(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\OmniOnePay\Message\QuocTeCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTeFetchRequest', $parameters);
     }
 
 }

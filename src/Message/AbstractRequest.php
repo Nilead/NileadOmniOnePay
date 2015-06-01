@@ -44,16 +44,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('secureHash', $secureHash);
     }
 
-    public function getVpcSecureHash()
-    {
-        return $this->getParameter('vpc_SecureHash');
-    }
-
-    public function setVpcSecureHash($vpc_SecureHash)
-    {
-        return $this->setParameter('vpc_SecureHash', $vpc_SecureHash);
-    }
-
     public function getVpcUser()
     {
         return $this->getParameter('vpcUser');
