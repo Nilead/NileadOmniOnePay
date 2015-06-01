@@ -3,9 +3,9 @@
 namespace Nilead\OmniOnePay\Message;
 
 /**
- * QuocTe Complete Purchase Request
+ * QuocTe Fetch Request
  */
-class QuocTeCompletePurchaseRequest extends NoiDiaCompletePurchaseRequest
+class QuocTeFetchRequest extends AbstractRequest
 {
     const API_VERSION = '1.0';
 
@@ -37,5 +37,10 @@ class QuocTeCompletePurchaseRequest extends NoiDiaCompletePurchaseRequest
         $httpResponse = $this->httpClient->post($this->getEndpoint(), '', $data)->send(); // method POST
 
         return $this->createResponse($httpResponse->getBody());
+    }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new FetchResponse($this, $data);
     }
 }

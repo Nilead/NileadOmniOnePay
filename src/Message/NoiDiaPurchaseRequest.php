@@ -41,16 +41,14 @@ class NoiDiaPurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $url = $this->getEndpoint() . '?' . http_build_query($this->generateDataWithChecksum($data), '', '&');
+        $data = http_build_query($this->generateDataWithChecksum($data), '', '&');
 
-        $httpResponse = $this->httpClient->get($url)->send();
-
-        return $this->createResponse($httpResponse->getBody());
+        return $this->createResponse($data);
     }
 
     protected function createResponse($data)
     {
-        return $this->response = new QuocTeIPNPurchaseResponse($this, $data);
+        return $this->response = new NoiDiaPurchaseResponse($this, $data);
     }
 
 }
