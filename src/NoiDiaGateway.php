@@ -85,11 +85,11 @@ class NoiDiaGateway extends AbstractGateway
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Nilead\OmniBaoKim\Message\NoiDiaCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaCompletePurchaseRequest', $parameters);
     }
 
     public function fetchCheckout(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\PayPal\Message\NoiDiaCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\OmniOnePay\Message\NoiDiaCompletePurchaseRequest', $parameters);
     }
 }
