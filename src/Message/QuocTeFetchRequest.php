@@ -7,15 +7,13 @@ namespace Nilead\OmniOnePay\Message;
  */
 class QuocTeFetchRequest extends AbstractRequest
 {
-    const API_VERSION = '1.0';
+    const API_VERSION = '1';
 
     protected $liveEndpoint = 'https://onepay.vn/vcppay/Vpcdps.op';
     protected $testEndpoint = 'https://mtf.onepay.vn/vcppay/Vpcdps.op';
 
     public function getData()
     {
-        $this->validate('vpc_MerchTxnRef');
-
         $data = $this->getBaseData();
 
         $data['vpc_Version'] = $this::API_VERSION;
@@ -27,6 +25,7 @@ class QuocTeFetchRequest extends AbstractRequest
 
         $data['vpc_User'] = $this->getVpcUser();
         $data['vpc_Password'] = $this->getVpcPassword();
+
         $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRefReference();
 
         return $data;
@@ -34,13 +33,9 @@ class QuocTeFetchRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), '', $data)->send(); // method POST
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data)->send(); // method POST
 
-        return $this->createResponse($httpResponse->getBody());
+        return $this->response = new FetchResponse($this, $httpResponse->getBody());
     }
 
-    protected function createResponse($data)
-    {
-        return $this->response = new FetchResponse($this, $data);
-    }
 }

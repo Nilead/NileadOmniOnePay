@@ -9,7 +9,7 @@ use \Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
-    const API_VERSION = '2.0';
+    const API_VERSION = '2';
 
     protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/vpc.op';
     protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
@@ -64,6 +64,23 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
+    public function getLocaleCode()
+    {
+        return $this->getParameter('localeCode');
+    }
+
+    /*
+     * Used to change the locale of PayPal pages.
+     * Accepts 2 or 5 character language codes as described here:
+     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
+     *
+     * If no value/invalid value is passed, the gateway will default it for you
+    */
+    public function setLocaleCode($value)
+    {
+        return $this->setParameter('localeCode', $value);
+    }
+
     public function getTransactionReference()
     {
         return $this->getParameter('vpc_TransactionNo');
@@ -87,8 +104,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function getBaseData()
     {
         return [
-            'vpcMerchant' => $this->getVpcMerchant(),
-            'vpcAccessCode' => $this->getVpcAccessCode(),
+            'vpc_Merchant' => $this->getVpcMerchant(),
+            'vpc_AccessCode' => $this->getVpcAccessCode(),
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nilead\OmniBaoKim\Message;
+namespace Nilead\OmniOnePay\Message;
 
 use Guzzle\Http\Message\RequestInterface;
 
@@ -9,49 +9,79 @@ use Guzzle\Http\Message\RequestInterface;
  */
 class NoiDiaCompletePurchaseRequest extends AbstractRequest
 {
-    protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/vpc.op';
-    protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
+    protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/Vpcdps.op';
+    protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/Vpcdps.op';
 
     public function getData()
     {
-        $this->validate('amount');
-
         $data = $this->getBaseData();
-        $data['total_amount'] = $this->getAmount();
-        $data['currency'] = $this->getCurrency();
-        $data['currency'] = $this->getTransactionReference();
+        $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRefReference();
 
         return $data;
     }
 
-    public function sendData($data)
-    {
-        $url = $this->getEndpoint() . '?' . http_build_query($data, '', '&');
-        $httpResponse = $this->httpClient->get($url)->send();
 
-        return $this->createResponse($httpResponse->getBody());
+    public function getConfirmReference()
+    {
+        $dataConfirm = [];
+
+        if($this->checkHash()){
+            $dataConfirm['responsecode'] = 1;
+            $dataConfirm['desc'] = 'confirm-success';
+        }else{
+            $dataConfirm['responsecode'] = 0;
+            $dataConfirm['desc'] = 'confirm-fail';
+        }
+
+        return $dataConfirm;
     }
 
+    public function sendData($data)
+    {
+        $httpResponse = $this->httpClient->post(
+            $this->getEndpoint(),
+            null,
+            $data //$this->encodeData($data)
+        )->send();
+
+        return $this->response = new FetchResponse($this, $httpResponse->getBody());
+    }
+
+    /**
+     * Encode absurd name value pair format
+     */
+    public function encodeData(array $data)
+    {
+        $output = array();
+        foreach ($data as $key => $value) {
+            $output[] = $key.'['.strlen($value).']='.$value;
+        }
+
+        return implode('&', $output);
+    }
+
+
     protected function checkHash(){
+
+        $data = $this->httpRequest->request->all();
+
         // get and remove the vpc_TxnResponseCode code from the response fields as we
         // do not want to include this field in the hash calculation
-        $vpc_Txn_Secure_Hash = $this->data['vpc_SecureHash'];
-        unset ($this->data['vpc_SecureHash']);
+        $vpc_Txn_Secure_Hash = $data['vpc_SecureHash'];
+        unset ($data['vpc_SecureHash']);
 
         // set a flag to indicate if hash has been validated
         $hashValidated = false;
+        $SECURE_SECRET = $this->getSecureHash();
 
-        $SECURE_SECRET = $_SESSION['SECURE_SECRET'];
-        unset($_SESSION['SECURE_SECRET']);
-
-        if (strlen ( $SECURE_SECRET ) > 0 && $this->data['vpc_TxnResponseCode'] != "7" && $this->data['vpc_TxnResponseCode'] != "No Value Returned") {
+        if (strlen ( $SECURE_SECRET ) > 0 && $data['vpc_TxnResponseCode'] != "7" && $data['vpc_TxnResponseCode'] != "No Value Returned") {
 
             //$stringHashData = $SECURE_SECRET;
             //*****************************khởi tạo chuỗi mã hóa rỗng*****************************
             $stringHashData = "";
 
             // sort all the incoming vpc response fields and leave out any with no value
-            foreach ( $this->data as $key => $value ) {
+            foreach ( $data as $key => $value ) {
                 //        if ($key != "vpc_SecureHash" or strlen($value) > 0) {
                 //            $stringHashData .= $value;
                 //        }
