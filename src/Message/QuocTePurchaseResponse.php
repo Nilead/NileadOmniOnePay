@@ -33,7 +33,7 @@ class QuocTePurchaseResponse extends Response implements RedirectResponseInterfa
 
     public function getRedirectData()
     {
-        return $this->getConfirmReference();
+        return null;
     }
 
     protected function getCheckoutEndpoint()
