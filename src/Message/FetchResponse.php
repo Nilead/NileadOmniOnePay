@@ -18,7 +18,7 @@ class FetchResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        return $this->data['vpc_DRExists'] == 'Y' && $this->data['vpc_TxnResponseCode'] == 0 ? true : false;
+        return isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == 0 ? true : false;
     }
 
     /**
@@ -26,7 +26,7 @@ class FetchResponse extends AbstractResponse
      */
     public function getMessage()
     {
-        if($this->data['vpc_DRExists'] == 'N'){
+        if(isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'N'){
             return  "Không tồn tại giao dịch";
         }else{
             return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
