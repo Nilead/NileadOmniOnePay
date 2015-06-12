@@ -11,11 +11,6 @@ class QuocTePurchaseResponse extends Response implements RedirectResponseInterfa
     protected $liveEndpoint = 'https://onepay.vn/vpcpay/vpcpay.op';
     protected $testEndpoint = 'https://mtf.onepay.vn/vpcpay/vpcpay.op';
 
-    public function isSuccessful()
-    {
-        return false;
-    }
-
     public function isRedirect()
     {
         return true;

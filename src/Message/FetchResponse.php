@@ -20,6 +20,8 @@ class FetchResponse extends AbstractResponse
     {
         if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == 0) {
             return true;
+        }elseif(!isset($this->data['vpc_DRExists']) && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == 0){
+            return true;
         } elseif (isset($this->data['vpc_ResponseCode']) && $this->data['vpc_ResponseCode'] == 0) {
             return true;
         }
@@ -38,7 +40,7 @@ class FetchResponse extends AbstractResponse
                 return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
             }
 
-            return '';
+            return isset($this->data['vcp_Message']) ? $this->data['vcp_Message'] : '';
         }
     }
 
