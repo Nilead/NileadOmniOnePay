@@ -91,12 +91,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('vpc_TransactionNo', $value);
     }
 
-    public function getVpcMerchTxnRefReference()
+    public function getVpc_MerchTxnRef()
     {
         return $this->getParameter('vpc_MerchTxnRef');
     }
 
-    public function setVpcMerchTxnRefReference($value)
+    public function setVpc_MerchTxnRef($value)
     {
         return $this->setParameter('vpc_MerchTxnRef', $value);
     }

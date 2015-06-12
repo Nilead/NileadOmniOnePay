@@ -40,7 +40,7 @@ class FetchResponse extends AbstractResponse
                 return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
             }
 
-            return isset($this->data['vcp_Message']) ? $this->data['vcp_Message'] : '';
+            return isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : '';
         }
     }
 

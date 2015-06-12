@@ -95,7 +95,7 @@ class QuocTeGateway extends AbstractGateway
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTeCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTeFetchRequest', $parameters);
     }
 
     public function fetchCheckout(array $parameters = array())

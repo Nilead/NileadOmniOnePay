@@ -26,7 +26,7 @@ class QuocTeFetchRequest extends AbstractRequest
         $data['vpc_User'] = $this->getVpcUser();
         $data['vpc_Password'] = $this->getVpcPassword();
 
-        $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRefReference();
+        $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRef();
 
         return $data;
     }

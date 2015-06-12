@@ -59,11 +59,12 @@ class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        foreach (['vpc_TransactionNo', 'vpc_MerchTxnRef'] as $key) {
-            if (isset($this->data[$key])) {
-                return $this->data[$key];
-            }
-        }
+        return isset($this->data['vpc_TransactionNo']) ? $this->data['vpc_TransactionNo'] : null;
+    }
+
+    public function getVpc_MerchTxnRef()
+    {
+        return isset($this->data['vpc_MerchTxnRef']) ? $this->data['vpc_MerchTxnRef'] : null;
     }
 
     /**
@@ -72,14 +73,12 @@ class Response extends AbstractResponse
     public function getMessage()
     {
         if (isset($this->data['vpc_TxnResponseCode'])) {
-            $responseCode = $this->data['vpc_TxnResponseCode'];
+            return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
         } elseif (isset($this->data['vpc_ResponseCode'])) {
-            $responseCode = $this->data['vpc_ResponseCode'];
+            return $this->getResponseDescription($this->data['vpc_ResponseCode']);
         } else {
-            $responseCode = $this->data['vcp_Message'];
+            return $this->data['vcp_Message'];
         }
-
-        return $this->getResponseDescription($responseCode);
     }
 
     protected function getResponseDescription($responseCode)
