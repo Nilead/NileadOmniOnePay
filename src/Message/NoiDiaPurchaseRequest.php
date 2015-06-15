@@ -21,12 +21,8 @@ class NoiDiaPurchaseRequest extends AbstractRequest
             'vpc_OrderInfo' => "Order_" . $this->getTransactionId() . "_" . time(),
             'vpc_Amount' => 100,
             'vpc_Locale' => 'vn',
-            //'vpc_ReturnURL'=>$url_return,
-            //'vpc_ReturnURL'=>'http://localhost',
             'vpc_ReturnURL' => $this->getReturnUrl(),
-//            'AgainLink' => urlencode($_SERVER['HTTP_REFERER']), //$this->getCancelUrl(),
             'vpc_TicketNo' => $_SERVER["REMOTE_ADDR"],
-            //'pay_method' => isset($_SESSION['pay_method']) ? $_SESSION['pay_method'] : 'CC',
             'vpc_Currency' => $this->getCurrency(),
         ];
 

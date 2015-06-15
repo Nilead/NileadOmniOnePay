@@ -18,13 +18,14 @@ class FetchResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == 0) {
+        if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0') {
             return true;
-        }elseif(!isset($this->data['vpc_DRExists']) && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == 0){
+        }elseif(!isset($this->data['vpc_DRExists']) && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0'){
             return true;
-        } elseif (isset($this->data['vpc_ResponseCode']) && $this->data['vpc_ResponseCode'] == 0) {
+        } elseif (isset($this->data['vpc_ResponseCode']) && $this->data['vpc_ResponseCode'] == '0') {
             return true;
         }
+
         return false;
     }
 
