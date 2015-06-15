@@ -59,12 +59,11 @@ class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        return isset($this->data['vpc_TransactionNo']) ? $this->data['vpc_TransactionNo'] : null;
-    }
-
-    public function getVpc_MerchTxnRef()
-    {
-        return isset($this->data['vpc_MerchTxnRef']) ? $this->data['vpc_MerchTxnRef'] : null;
+        foreach (['vpc_MerchTxnRef', 'vpc_TransactionNo'] as $key) {
+            if (isset($this->data[$key])) {
+                return $this->data[$key];
+            }
+        }
     }
 
     /**
