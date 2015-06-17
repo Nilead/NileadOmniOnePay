@@ -35,8 +35,11 @@ class Response extends AbstractResponse
     public function __construct(RequestInterface $request, $data)
     {
         $this->request = $request;
-        parse_str($data, $this->data);
-
+        if(!is_array($data)){
+            parse_str($data, $this->data);
+        }else{
+            $this->data = $data;
+        }
     }
 
     public function isSuccessful()
