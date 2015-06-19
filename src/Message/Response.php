@@ -10,8 +10,6 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Response extends AbstractResponse
 {
-    protected $hashValidated = false;
-
     protected $transactionStatus = [
         '0' => 'Giao dịch thành công - Approved',
         '1' => 'Ngân hàng từ chối giao dịch - Bank Declined',
@@ -19,7 +17,7 @@ class Response extends AbstractResponse
         '4' => 'Không đúng access code - Invalid access code',
         '5' => 'Số tiền không hợp lệ - Invalid amount',
         '6' => 'Mã tiền tệ không tồn tại - Invalid currency code',
-        '7' => 'Lỗi không xác định - Unspecified Failure ',
+        '7' => 'Lỗi không xác định - Unspecified Failure',
         '8' => 'Số thẻ không đúng - Invalid card Number',
         '9' => 'Tên chủ thẻ không đúng - Invalid card name',
         '10' => 'Thẻ hết hạn/Thẻ bị khóa - Expired Card',
