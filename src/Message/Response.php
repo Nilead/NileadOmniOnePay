@@ -77,7 +77,7 @@ class Response extends AbstractResponse
         } elseif (isset($this->data['vpc_ResponseCode'])) {
             return $this->getResponseDescription($this->data['vpc_ResponseCode']);
         } else {
-            return $this->data['vcp_Message'];
+            return $this->data['vpc_Message'];
         }
     }
 

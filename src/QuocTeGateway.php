@@ -29,4 +29,9 @@ class QuocTeGateway extends NoiDiaGateway
         return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTeFetchRequest', $parameters);
     }
 
+    public function getResponse(array $parameters = array(), $type = 'purchase')
+    {
+        return $this->createResponse('\Nilead\OmniOnePay\Message\QuocTePurchaseResponse', $parameters, $type);
+    }
+
 }

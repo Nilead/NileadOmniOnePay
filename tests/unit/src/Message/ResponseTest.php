@@ -1,6 +1,6 @@
 <?php
 
-namespace Nilead\OmniBaoKim\Message;
+namespace Nilead\OmniOnePay\Message;
 
 use Omnipay\Tests\TestCase;
 
@@ -15,7 +15,7 @@ class ResponseTest extends TestCase
 
     public function testProPurchaseSuccess()
     {
-        $httpResponse = $this->getMockHttpResponse('ProPurchaseSuccess.txt');
+        $httpResponse = $this->getMockHttpResponse('NoiDiaPurchaseSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
@@ -25,7 +25,7 @@ class ResponseTest extends TestCase
 
     public function testProPurchaseFailure()
     {
-        $httpResponse = $this->getMockHttpResponse('ProPurchaseFailure.txt');
+        $httpResponse = $this->getMockHttpResponse('NoiDiaPurchaseFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
