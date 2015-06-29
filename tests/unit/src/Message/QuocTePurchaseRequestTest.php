@@ -13,30 +13,27 @@ class QuocTePurchaseRequestTest extends TestCase
 
     public function setUp()
     {
-        $client = $this->getHttpClient();
-        $this->request = $this->getHttpRequest();
+        $this->request = new QuocTePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'vpc_Merchant' => 'TESTONEPAY',
-            'vpc_AccessCode' => '6BEB2546',
+            'vpcMerchant' => 'TESTONEPAY',
+            'vpcAccessCode' => '6BEB2546',
             'secureHash' => 'A3EFDFABA8653DF2342E8DAC29B51AF0',
             'testMode' => true,
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
             'returnUrl' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431786?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
-            'amount' => 1000,
+            'amount' => '1000',
             'currency' => 'VND',
             'transactionId' => '1431786'
         );
 
         $this->request->initialize($this->options);
-
-        $this->request = new QuocTePurchaseRequest($client, $this->request);
     }
 
     public function testGetData()
     {
-        $this->request->setVpc_MerchTxnRef('3333333333333333344444');
+//        $this->request->setVpc_MerchTxnRef('3333333333333333344444');
 
         $expected =[
             'vpc_Merchant' => 'TESTONEPAY',
@@ -45,20 +42,27 @@ class QuocTePurchaseRequestTest extends TestCase
             'Title' => 'VPC 3-Party',
             'vpc_Version' => '2',
             'vpc_Command' => 'pay',
-            'vpc_MerchTxnRef' => '3333333333333333344444',
+            'virtualPaymentClientURL' => $this->testGetEndpoint(),
+//            'vpc_MerchTxnRef' => '3333333333333333344444',
 //            'vpc_OrderInfo' => "Order_1431786_22222",
-            'vpc_Amount' => 1000,
-            'vpc_Locale' => 'vn',
+            'vpc_Amount' => '1000',
+            'vpc_Locale' => $this->getHttpRequest()->getLocale(),
             'vpc_ReturnURL' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431786?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
-            'vpc_TicketNo' => '192.168.0.2',
-            'vpc_Currency' => 'VND'
+            'vpc_TicketNo' => $this->getHttpRequest()->getClientIp(),
+            'AgainLink' => urlencode($this->getHttpRequest()->server->get('HTTP_REFERER'))
 
         ];
 
-        // exclude by random property
-        unset($this->request->getData()['vpc_OrderInfo']);
+        $requetData = $this->request->getData();
 
-        $this->assertEquals($expected, $this->request->getData());
+        $this->assertNotNull($requetData['vpc_MerchTxnRef']);
+        $this->assertNotNull($requetData['vpc_OrderInfo']);
+
+        // exclude by random property
+        unset($requetData['vpc_OrderInfo']);
+        unset($requetData['vpc_MerchTxnRef']);
+
+        $this->assertEquals($expected, $requetData);
     }
 
     public function testSendData()
@@ -68,5 +72,15 @@ class QuocTePurchaseRequestTest extends TestCase
         $data = $this->request->generateDataWithChecksum($this->request->getData());
 
         $this->assertArrayHasKey('vpc_SecureHash', $data);
+    }
+
+    public function testGetEndpoint(){
+        $reflectionOfUser = new \ReflectionClass('\Nilead\OmniOnePay\Message\QuocTePurchaseRequest');
+        $method = $reflectionOfUser->getMethod('getEndpoint');
+        $method->setAccessible(true);
+
+        $this->assertEquals('https://mtf.onepay.vn/vpcpay/vpcpay.op', $method->invokeArgs($this->request, array()));
+
+        return 'https://mtf.onepay.vn/vpcpay/vpcpay.op';
     }
 }

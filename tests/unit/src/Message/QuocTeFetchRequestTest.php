@@ -24,10 +24,8 @@ class QuocTeFetchRequestTest extends TestCase
         $this->request = new QuocTeFetchRequest($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'vpc_Merchant' => 'TESTONEPAY',
-            'vpc_AccessCode' => '6BEB2546',
-            'vpc_Version' => '1',
-            'vpc_Command' => 'queryDR',
+            'vpcMerchant' => 'TESTONEPAY',
+            'vpcAccessCode' => '6BEB2546',
             'testMode' => true,
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
@@ -47,8 +45,8 @@ class QuocTeFetchRequestTest extends TestCase
         $this->assertSame('6BEB2546', $data['vpc_AccessCode']);
         $this->assertSame('1', $data['vpc_Version']);
         $this->assertSame('queryDR', $data['vpc_Command']);
-        $this->assertSame('op01', $data['vpcUser']);
-        $this->assertSame('op123456', $data['vpcPassword']);
+        $this->assertSame('op01', $data['vpc_User']);
+        $this->assertSame('op123456', $data['vpc_Password']);
         $this->assertSame('GDEAXIEM_41382,4523317014', $data['vpc_MerchTxnRef']);
     }
 }

@@ -13,30 +13,27 @@ class NoiDiaPurchaseRequestTest extends TestCase
 
     public function setUp()
     {
-        $client = $this->getHttpClient();
-        $this->request = $this->getHttpRequest();
+        $this->request = new NoiDiaPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'vpc_Merchant' => 'ONEPAY',
-            'vpc_AccessCode' => 'D67342C2',
+            'vpcMerchant' => 'ONEPAY',
+            'vpcAccessCode' => 'D67342C2',
             'secureHash' => 'A3EFDFABA8653DF2342E8DAC29B51AF0',
             'testMode' => true,
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
             'returnUrl' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
-            'amount' => 1000,
+            'amount' => '1000',
             'currency' => 'VND',
             'transactionId' => '1431785'
         );
 
         $this->request->initialize($this->options);
-
-        $this->request = new NoiDiaPurchaseRequest($client, $this->request);
     }
 
     public function testGetData()
     {
-        $this->request->setVpc_MerchTxnRef('33333333333333333');
+//        $this->request->setVpc_MerchTxnRef('33333333333333333');
 
         $expected =[
             'vpc_Merchant' => 'ONEPAY',
@@ -45,20 +42,27 @@ class NoiDiaPurchaseRequestTest extends TestCase
             'Title' => 'VPC 3-Party',
             'vpc_Version' => '2',
             'vpc_Command' => 'pay',
-            'vpc_MerchTxnRef' => '33333333333333333',
+            'virtualPaymentClientURL' => $this->testGetEndpoint(),
+//            'vpc_MerchTxnRef' => '33333333333333333',
 //            'vpc_OrderInfo' => "Order_1431786_11111",
-            'vpc_Amount' => 1000,
-            'vpc_Locale' => 'vn',
+            'vpc_Amount' => '1000',
+            'vpc_Locale' => $this->getHttpRequest()->getLocale(),
             'vpc_ReturnURL' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
-            'vpc_TicketNo' => '192.168.0.1',
+            'vpc_TicketNo' => $this->getHttpRequest()->getClientIp(),
             'vpc_Currency' => 'VND'
 
         ];
 
-        // exclude by random property
-        unset($this->request->getData()['vpc_OrderInfo']);
+        $requetData = $this->request->getData();
 
-        $this->assertEquals($expected, $this->request->getData());
+        $this->assertNotNull($requetData['vpc_MerchTxnRef']);
+        $this->assertNotNull($requetData['vpc_OrderInfo']);
+
+        // exclude by random property
+        unset($requetData['vpc_OrderInfo']);
+        unset($requetData['vpc_MerchTxnRef']);
+
+        $this->assertEquals($expected, $requetData);
     }
 
     public function testSendData()
@@ -68,5 +72,15 @@ class NoiDiaPurchaseRequestTest extends TestCase
         $data = $this->request->generateDataWithChecksum($this->request->getData());
 
         $this->assertArrayHasKey('vpc_SecureHash', $data);
+    }
+
+    public function testGetEndpoint(){
+        $reflectionOfUser = new \ReflectionClass('\Nilead\OmniOnePay\Message\NoiDiaPurchaseRequest');
+        $method = $reflectionOfUser->getMethod('getEndpoint');
+        $method->setAccessible(true);
+
+        $this->assertEquals('https://mtf.onepay.vn/onecomm-pay/vpc.op', $method->invokeArgs($this->request, array()));
+
+        return 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
     }
 }

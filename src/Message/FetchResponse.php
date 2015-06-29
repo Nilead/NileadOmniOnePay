@@ -37,7 +37,7 @@ class FetchResponse extends AbstractResponse
         if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'N') {
             return "Không tồn tại giao dịch";
         } else {
-            if (isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode']) {
+            if (isset($this->data['vpc_TxnResponseCode'])) {
                 return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
             }
 
@@ -58,7 +58,7 @@ class FetchResponse extends AbstractResponse
                 $result = "Giao dịch đang chờ - Pending";
                 break;
             default :
-                $result = " Giao dịch không thanh toán thành công - Failured";
+                $result = "Giao dịch không thanh toán thành công - Failured";
         }
         return $result;
     }

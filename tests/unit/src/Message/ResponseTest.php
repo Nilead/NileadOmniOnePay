@@ -13,23 +13,22 @@ class ResponseTest extends TestCase
         $this->assertEquals(array('example' => 'value', 'foo' => 'bar'), $response->getData());
     }
 
-    public function testProPurchaseSuccess()
+    public function testPurchaseSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('NoiDiaPurchaseSuccess.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertSame('96U93778BD657313D', $response->getTransactionReference());
-        $this->assertNull($response->getMessage());
+        $this->assertSame('2413', $response->getTransactionReference());
+        $this->assertEquals('Giao dịch thành công - Approved', $response->getMessage());
     }
 
-    public function testProPurchaseFailure()
+    public function testPurchaseFailure()
     {
         $httpResponse = $this->getMockHttpResponse('NoiDiaPurchaseFailure.txt');
         $response = new Response($this->getMockRequest(), $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getTransactionReference());
-        $this->assertSame('This transaction cannot be processed. Please enter a valid credit card expiration year.', $response->getMessage());
+        $this->assertSame('Field AgainLink value is invalid.', $response->getMessage());
     }
 }

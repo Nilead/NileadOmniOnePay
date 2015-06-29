@@ -19,11 +19,10 @@ class QuocTePurchaseResponseTest extends TestCase
             'vpc_Command' => 'pay',
             'vpc_MerchTxnRef' => '3333333333333333344444',
             'vpc_OrderInfo' => "Order_1431785_22222",
-            'vpc_Amount' => 1000,
+            'vpc_Amount' => '1000',
             'vpc_Locale' => 'vn',
             'vpc_ReturnURL' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431786?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
             'vpc_TicketNo' => '192.168.0.2',
-            'vpc_Currency' => 'VND',
             'vpc_SecureHash' => '44444444444444444'
         ];
 

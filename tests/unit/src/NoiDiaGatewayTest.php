@@ -23,14 +23,14 @@ class NoiDiaGatewayTest extends GatewayTestCase
         $this->gateway = new NoiDiaGateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->options = array(
-            'vpc_Merchant' => 'ONEPAY',
-            'vpc_AccessCode' => 'D67342C2',
+            'vpcMerchant' => 'ONEPAY',
+            'vpcAccessCode' => 'D67342C2',
             'secureHash' => 'A3EFDFABA8653DF2342E8DAC29B51AF0',
             'testMode' => true,
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
             'returnUrl' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
-            'amount' => 1000,
+            'amount' => '1000',
             'currency' => 'VND',
             'transactionId' => '1431785'
         );
@@ -38,24 +38,42 @@ class NoiDiaGatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $this->setMockHttpResponse('NoiDiaPurchaseSuccess.txt');
-
         $response = $this->gateway->purchase($this->options)->send();
 
+//        $this->assertEquals('https://mtf.onepay.vn/onecomm-pay/vpc.op?' . http_build_query($this->options, '', '&'), $response->getRedirectUrl());
+
         $this->assertInstanceOf('\Nilead\OmniOnePay\Message\NoiDiaPurchaseResponse', $response);
-        $this->assertTrue($response->isSuccessful());
+
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://mtf.onepay.vn/onecomm-pay/vpc.op?' . http_build_query($this->options, '', '&'), $response->getRedirectUrl());
+
+        //mock data after redirect request
+        $this->setMockHttpResponse('NoiDiaPurchaseSuccess.txt');
+//        $re = $this->getMockHttpResponse('NoiDiaPurchaseSuccess.txt');
+//        Debug::dump($re->getBody(),5);die;
+        // process return data
+        $response = $this->gateway->createResponse('\Nilead\OmniOnePay\Message\Response', array('vpc_TxnResponseCode' => 0), 'purchase');
+
+        $this->assertTrue($response->isSuccessful());
+
+        // send to complete
+        $this->testFetchSuccess();
     }
 
     public function testPurchaseFailure()
     {
-        $this->setMockHttpResponse('NoiDiaPurchaseFailure.txt');
-
         $response = $this->gateway->purchase($this->options)->send();
 
+        $this->assertInstanceOf('\Nilead\OmniOnePay\Message\NoiDiaPurchaseResponse', $response);
+
+        $this->assertTrue($response->isRedirect());
+
+        //mock data after redirect request
+        $this->setMockHttpResponse('NoiDiaPurchaseFailure.txt');
+
+        $response = $this->gateway->createResponse('\Nilead\OmniOnePay\Message\Response', array('vpc_Message' => 'Field AgainLink value is invalid.'), 'purchase');
+
         $this->assertFalse($response->isSuccessful());
-        $this->assertNull($response->getTransactionReference());
+
         $this->assertSame('Field AgainLink value is invalid.', $response->getMessage());
     }
 
@@ -64,8 +82,8 @@ class NoiDiaGatewayTest extends GatewayTestCase
         $this->setMockHttpResponse('NoiDiaFetchSuccess.txt');
 
         $options = [
-            'vpc_Merchant' => 'ONEPAY',
-            'vpc_AccessCode' => 'D67342C2',
+            'vpcMerchant' => 'ONEPAY',
+            'vpcAccessCode' => 'D67342C2',
             'secureHash' => 'A3EFDFABA8653DF2342E8DAC29B51AF0',
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
@@ -76,12 +94,16 @@ class NoiDiaGatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchCheckout($options);
 
         $this->assertInstanceOf('\Nilead\OmniOnePay\Message\NoiDiaFetchRequest', $request);
-        $this->assertSame('2413', $request->getTransactionReference());
+
+        $this->assertSame('2413', $request->getVpc_MerchTxnRef());
 
         $response = $request->send();
+
         $this->assertTrue($response->isSuccessful());
 
         $this->assertSame('Giao dịch thành công - Approved', $response->getMessage());
+
+        return $response;
     }
 
     public function testFetchFailure()
@@ -89,8 +111,8 @@ class NoiDiaGatewayTest extends GatewayTestCase
         $this->setMockHttpResponse('NoiDiaFetchFailure.txt');
 
         $options = [
-            'vpc_Merchant' => 'ONEPAY',
-            'vpc_AccessCode' => 'D67342C2',
+            'vpcMerchant' => 'ONEPAY',
+            'vpcAccessCode' => 'D67342C2',
             'secureHash' => 'A3EFDFABA8653DF2342E8DAC29B51AF0',
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
@@ -101,12 +123,13 @@ class NoiDiaGatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchCheckout($options);
 
         $this->assertInstanceOf('\Nilead\OmniOnePay\Message\NoiDiaFetchRequest', $request);
-        $this->assertSame('2013042215193440019', $request->getTransactionReference());
+        $this->assertSame('2013042215193440019', $request->getVpc_MerchTxnRef());
 
         $response = $request->send();
         $this->assertFalse($response->isSuccessful());
 
-        $this->assertSame('Giao dịch thất bại - Failured', $response->getMessage());
-    }
+        $this->assertSame('Giao dịch không thanh toán thành công - Failured', $response->getMessage());
 
+        return $response;
+    }
 }
