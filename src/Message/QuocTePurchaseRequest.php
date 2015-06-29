@@ -25,8 +25,8 @@ class QuocTePurchaseRequest extends AbstractRequest
             'vpc_Amount' => $this->getAmount(),
             'vpc_Locale' => $this->httpRequest->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'AgainLink' => urlencode($_SERVER['HTTP_REFERER']), //$this->getCancelUrl(),
-            'vpc_TicketNo' => $_SERVER["REMOTE_ADDR"],
+            'AgainLink' => urlencode($this->httpRequest->server->get('HTTP_REFERER')), //$this->getCancelUrl(),
+            'vpc_TicketNo' => $this->httpRequest->getClientIp(),
         ];
 
         return array_merge($data, $this->getBaseData());

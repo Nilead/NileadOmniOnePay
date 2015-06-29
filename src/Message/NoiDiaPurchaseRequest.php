@@ -22,7 +22,7 @@ class NoiDiaPurchaseRequest extends AbstractRequest
             'vpc_Amount' => $this->getAmount(),
             'vpc_Locale' => $this->httpRequest->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'vpc_TicketNo' => $_SERVER["REMOTE_ADDR"],
+            'vpc_TicketNo' =>  $this->httpRequest->getClientIp(),
             'vpc_Currency' => $this->getCurrency()
         ];
 
