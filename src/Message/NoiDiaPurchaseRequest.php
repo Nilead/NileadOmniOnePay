@@ -17,40 +17,23 @@ class NoiDiaPurchaseRequest extends AbstractRequest
             'virtualPaymentClientURL' => $this->getEndpoint(),
             'vpc_Version' => $this::API_VERSION,
             'vpc_Command' => 'pay',
-            //'vpc_MerchTxnRef' =>'201204091225015472',
             'vpc_MerchTxnRef' => date('YmdHis') . rand(),
             'vpc_OrderInfo' => "Order_" . $this->getTransactionId() . "_" . time(),
-            //'vpc_OrderInfo' => 'JSECURETEST01',
             'vpc_Amount' => $this->getAmount(),
-            //'vpc_Amount' => '1000',
-            'vpc_Locale' => 'vn',
-            //'vpc_ReturnURL'=>$url_return,
-            //'vpc_ReturnURL'=>'http://localhost',
+            'vpc_Locale' => $this->httpRequest->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'AgainLink' => urlencode($_SERVER['HTTP_REFERER']), //$this->getCancelUrl(),
-            //'vpc_TicketNo' =>'192.168.0.1',
-            'vpc_TicketNo' => $_SERVER["REMOTE_ADDR"],
-            //'pay_method' => isset($_SESSION['pay_method']) ? $_SESSION['pay_method'] : 'CC',
-            'vpc_Currency' => $this->getCurrency(),
+            'vpc_TicketNo' =>  $this->httpRequest->getClientIp(),
+            'vpc_Currency' => $this->getCurrency()
         ];
-
-        $_SESSION['SECURE_SECRET'] = $this->getSecureHash();
 
         return array_merge($data, $this->getBaseData());
     }
 
     public function sendData($data)
     {
-        $url = $this->getEndpoint() . '?' . http_build_query($this->generateDataWithChecksum($data), '', '&');
+        $data = http_build_query($this->generateDataWithChecksum($data), '', '&');
 
-        $httpResponse = $this->httpClient->get($url)->send();
-
-        return $this->createResponse($httpResponse->getBody());
-    }
-
-    protected function createResponse($data)
-    {
-        return $this->response = new QuocTeIPNPurchaseResponse($this, $data);
+        return $this->response = new NoiDiaPurchaseResponse($this, $data);
     }
 
 }

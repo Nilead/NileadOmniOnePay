@@ -9,87 +9,67 @@ use \Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
-    const API_VERSION = '2.0';
+    const API_VERSION = '2';
 
     protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/vpc.op';
     protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
 
     public function getVpcAccessCode()
     {
-        return $this->getParameter('vpc_AccessCode');
+        return $this->getParameter('vpcAccessCode');
     }
 
-    public function setVpcAccessCode($vpc_AccessCode)
+    public function setVpcAccessCode($vpcAccessCode)
     {
-        return $this->setParameter('vpc_AccessCode', $vpc_AccessCode);
+        return $this->setParameter('vpcAccessCode', $vpcAccessCode);
     }
 
     public function getVpcMerchant()
     {
-        return $this->getParameter('vpc_Merchant');
+        return $this->getParameter('vpcMerchant');
     }
 
-    public function setVpcMerchant($vpc_Merchant)
+    public function setVpcMerchant($vpcMerchant)
     {
-        return $this->setParameter('vpc_Merchant', $vpc_Merchant);
+        return $this->setParameter('vpcMerchant', $vpcMerchant);
     }
 
     public function getSecureHash()
     {
-        return $this->getParameter('secure_hash');
+        return $this->getParameter('secureHash');
     }
 
-    public function setSecureHash($secure_hash)
+    public function setSecureHash($secureHash)
     {
-        return $this->setParameter('secure_hash', $secure_hash);
-    }
-
-    public function getVpcSecureHash()
-    {
-        return $this->getParameter('vpc_SecureHash');
-    }
-
-    public function setVpcSecureHash($vpc_SecureHash)
-    {
-        return $this->setParameter('vpc_SecureHash', $vpc_SecureHash);
+        return $this->setParameter('secureHash', $secureHash);
     }
 
     public function getVpcUser()
     {
-        return $this->getParameter('vpc_User');
+        return $this->getParameter('vpcUser');
     }
 
-    public function setVpcUser($vpc_User)
+    public function setVpcUser($vpcUser)
     {
-        return $this->setParameter('vpc_User', $vpc_User);
+        return $this->setParameter('vpcUser', $vpcUser);
     }
 
     public function getVpcPassword()
     {
-        return $this->getParameter('vpc_Password');
+        return $this->getParameter('vpcPassword');
     }
 
-    public function setVpcPassword($vpc_Password)
+    public function setVpcPassword($vpcPassword)
     {
-        return $this->setParameter('vpc_Password', $vpc_Password);
+        return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
-    public function getTransactionReference()
-    {
-        return $this->getParameter('vpc_TransactionNo');
-    }
-
-    public function setTransactionReference($value)
-    {
-        return $this->setParameter('vpc_TransactionNo', $value);
-    }
-
-    public function getVpcMerchTxnRefReference()
+    public function getVpc_MerchTxnRef()
     {
         return $this->getParameter('vpc_MerchTxnRef');
     }
 
-    public function setVpcMerchTxnRefReference($value)
+    public function setVpc_MerchTxnRef($value)
     {
         return $this->setParameter('vpc_MerchTxnRef', $value);
     }
