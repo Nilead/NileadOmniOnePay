@@ -95,11 +95,29 @@ class NoiDiaGateway extends AbstractGateway
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaCompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaFetchRequest', $parameters);
     }
 
     public function fetchCheckout(array $parameters = array())
     {
         return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaFetchRequest', $parameters);
+    }
+
+    /**
+     * TODO should move to AbstractGateway
+     *
+     * Create a response object using existing parameters from return url , redirect url
+     * @param string $class The response class name, ex: \Omnipay\Payflow\Message\Response
+     * @param array $parameters, ex: ["action" => "return", "vpc_TxnResponseCode" => 5, "vpc_Message" => "Amount is invalid"]
+     * @return object, ex: \Omnipay\Common\Message\Response
+     */
+    public function createResponse($class, array $parameters, $type)
+    {
+        return new $class(call_user_func_array([$this, $type], [$parameters]), $parameters);
+    }
+
+    public function getResponse(array $parameters = array(), $type = 'purchase')
+    {
+        return $this->createResponse('\Nilead\OmniOnePay\Message\Response', $parameters, $type);
     }
 }

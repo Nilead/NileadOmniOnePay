@@ -11,11 +11,6 @@ class NoiDiaPurchaseResponse extends Response implements RedirectResponseInterfa
     protected $liveEndpoint = 'https://onepay.vn/onecomm-pay/vpc.op';
     protected $testEndpoint = 'https://mtf.onepay.vn/onecomm-pay/vpc.op';
 
-    public function isSuccessful()
-    {
-        return false;
-    }
-
     public function isRedirect()
     {
         return true;

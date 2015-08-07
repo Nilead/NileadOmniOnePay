@@ -64,39 +64,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
-    public function getLocaleCode()
-    {
-        return $this->getParameter('localeCode');
-    }
-
-    /*
-     * Used to change the locale of PayPal pages.
-     * Accepts 2 or 5 character language codes as described here:
-     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
-     *
-     * If no value/invalid value is passed, the gateway will default it for you
-    */
-    public function setLocaleCode($value)
-    {
-        return $this->setParameter('localeCode', $value);
-    }
-
-    public function getTransactionReference()
-    {
-        return $this->getParameter('vpc_TransactionNo');
-    }
-
-    public function setTransactionReference($value)
-    {
-        return $this->setParameter('vpc_TransactionNo', $value);
-    }
-
-    public function getVpcMerchTxnRefReference()
+    public function getVpc_MerchTxnRef()
     {
         return $this->getParameter('vpc_MerchTxnRef');
     }
 
-    public function setVpcMerchTxnRefReference($value)
+    public function setVpc_MerchTxnRef($value)
     {
         return $this->setParameter('vpc_MerchTxnRef', $value);
     }

@@ -5,7 +5,7 @@ namespace Nilead\OmniOnePay\Message;
 /**
  * NoiDia Fetch Request
  */
-class NoiDiaFetchPurchaseRequest extends AbstractRequest
+class NoiDiaFetchRequest extends AbstractRequest
 {
     const API_VERSION = '1';
 
@@ -26,7 +26,7 @@ class NoiDiaFetchPurchaseRequest extends AbstractRequest
         $data['vpc_User'] = $this->getVpcUser();
         $data['vpc_Password'] = $this->getVpcPassword();
 
-        $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRefReference();
+        $data['vpc_MerchTxnRef'] = $this->getVpc_MerchTxnRef();
 
         return $data;
     }

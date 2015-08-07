@@ -23,14 +23,10 @@ class QuocTePurchaseRequest extends AbstractRequest
             'vpc_MerchTxnRef' => date('YmdHis') . rand(),
             'vpc_OrderInfo' => "Order_" . $this->getTransactionId() . "_" . time(),
             'vpc_Amount' => $this->getAmount(),
-            'vpc_Locale' => $this->getLocaleCode(),
-            //'vpc_ReturnURL'=>$url_return,
-            //'vpc_ReturnURL'=>'http://localhost',
+            'vpc_Locale' => $this->httpRequest->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'AgainLink' => urlencode($_SERVER['HTTP_REFERER']), //$this->getCancelUrl(),
-            'vpc_TicketNo' => $_SERVER["REMOTE_ADDR"],
-            //'pay_method' => isset($_SESSION['pay_method']) ? $_SESSION['pay_method'] : 'CC',
-            'vpc_Currency' => $this->getCurrency(),
+            'AgainLink' => urlencode($this->httpRequest->server->get('HTTP_REFERER')), //$this->getCancelUrl(),
+            'vpc_TicketNo' => $this->httpRequest->getClientIp(),
         ];
 
         return array_merge($data, $this->getBaseData());

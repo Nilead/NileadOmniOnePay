@@ -18,7 +18,15 @@ class FetchResponse extends AbstractResponse
 
     public function isSuccessful()
     {
-        return $this->data['vpc_DRExists'] == 'Y' && $this->data['vpc_TxnResponseCode'] == 0 ? true : false;
+        if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0') {
+            return true;
+        }elseif(!isset($this->data['vpc_DRExists']) && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0'){
+            return true;
+        } elseif (isset($this->data['vpc_ResponseCode']) && $this->data['vpc_ResponseCode'] == '0') {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -26,17 +34,22 @@ class FetchResponse extends AbstractResponse
      */
     public function getMessage()
     {
-        if($this->data['vpc_DRExists'] == 'N'){
-            return  "Không tồn tại giao dịch";
-        }else{
-            return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
+        if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'N') {
+            return "Không tồn tại giao dịch";
+        } else {
+            if (isset($this->data['vpc_TxnResponseCode'])) {
+                return $this->getResponseDescription($this->data['vpc_TxnResponseCode']);
+            }
+
+            return isset($this->data['vpc_Message']) ? $this->data['vpc_Message'] : '';
         }
     }
 
     /**
      * @return string
      */
-    protected function getResponseDescription($responseCode) {
+    protected function getResponseDescription($responseCode)
+    {
         switch ($responseCode) {
             case "0" :
                 $result = "Giao dịch thành công - Approved";
@@ -45,7 +58,7 @@ class FetchResponse extends AbstractResponse
                 $result = "Giao dịch đang chờ - Pending";
                 break;
             default :
-                $result = " Giao dịch không thanh toán thành công - Failured";
+                $result = "Giao dịch không thanh toán thành công - Failured";
         }
         return $result;
     }

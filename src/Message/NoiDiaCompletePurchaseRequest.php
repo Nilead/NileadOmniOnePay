@@ -3,7 +3,6 @@
 namespace Nilead\OmniOnePay\Message;
 
 use Guzzle\Http\Message\RequestInterface;
-
 /**
  * Noi Dia Complete Purchase Request
  */
@@ -15,7 +14,7 @@ class NoiDiaCompletePurchaseRequest extends AbstractRequest
     public function getData()
     {
         $data = $this->getBaseData();
-        $data['vpc_MerchTxnRef'] = $this->getVpcMerchTxnRefReference();
+        $data['vpc_MerchTxnRef'] = $this->getVpc_MerchTxnRef();
 
         return $data;
     }
