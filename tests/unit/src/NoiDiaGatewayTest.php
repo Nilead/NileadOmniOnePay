@@ -29,7 +29,7 @@ class NoiDiaGatewayTest extends GatewayTestCase
             'testMode' => true,
             'vpcUser' => 'op01',
             'vpcPassword' => 'op123456',
-            'returnUrl' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
+            'returnUrl' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?custom_id=94bc04c3760620d537b6717abd53ff3e&action=return',
             'amount' => '1000',
             'currency' => 'VND',
             'transactionId' => '1431785'

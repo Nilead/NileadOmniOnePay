@@ -21,7 +21,7 @@ class NoiDiaPurchaseResponseTest extends TestCase
             'vpc_OrderInfo' => "Order_1431785__11111",
             'vpc_Amount' => '1000',
             'vpc_Locale' => 'vn',
-            'vpc_ReturnURL' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?client_key=94bc04c3760620d537b6717abd53ff3e&action=return',
+            'vpc_ReturnURL' => 'http://truonghoang.cool/app_dev.php/backend/process_transaction.html/1431785?custom_id=94bc04c3760620d537b6717abd53ff3e&action=return',
             'vpc_TicketNo' => '192.168.0.1',
             'vpc_Currency' => 'VND',
             'vpc_SecureHash' => '44444444444444444'

@@ -2,6 +2,8 @@
 
 namespace Nilead\OmniOnePay\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 /**
  * NoiDia Fetch Request
  */
