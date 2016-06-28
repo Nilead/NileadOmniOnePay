@@ -64,12 +64,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('vpcPassword', $vpcPassword);
     }
 
-    public function getVpc_MerchTxnRef()
+    public function getVpcMerchtxnref()
     {
         return $this->getParameter('vpc_MerchTxnRef');
     }
 
-    public function setVpc_MerchTxnRef($value)
+    public function setVpcMerchtxnref($value)
     {
         return $this->setParameter('vpc_MerchTxnRef', $value);
     }
