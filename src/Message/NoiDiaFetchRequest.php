@@ -28,7 +28,7 @@ class NoiDiaFetchRequest extends AbstractRequest
         $data['vpc_User'] = $this->getVpcUser();
         $data['vpc_Password'] = $this->getVpcPassword();
 
-        $data['vpc_MerchTxnRef'] = $this->getVpc_MerchTxnRef();
+        $data['vpc_MerchTxnRef'] = $this->getVpcMerchtxnref();
 
         return $data;
     }
