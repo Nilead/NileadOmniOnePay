@@ -5,7 +5,8 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use \Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {
@@ -98,6 +99,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function createResponse($data)
     {
         return $this->response = new Response($this, $data);
+    }
+
+    /**
+     * We do NOT want to validates and returns the formated amount.
+     *
+     * @throws InvalidRequestException on any validation failure.
+     * @return string The amount formatted to the correct number of decimal places for the selected currency.
+     */
+    public function getAmount()
+    {
+        return $this->getParameter('amount');
     }
 
     public function generateDataWithChecksum($data)
