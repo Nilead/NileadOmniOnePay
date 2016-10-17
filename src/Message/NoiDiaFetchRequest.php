@@ -2,7 +2,7 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
+use League\Omnipay\Common\Exception\InvalidRequestException;
 
 /**
  * NoiDia Fetch Request
@@ -35,7 +35,7 @@ class NoiDiaFetchRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data)->send(); // method POST
+        $httpResponse = $this->httpClient->request('post', $this->getEndpoint(), [], json_encode($data)); // method POST
 
         return $this->response = new FetchResponse($this, $httpResponse->getBody());
     }

@@ -2,7 +2,7 @@
 
 namespace Nilead\OmniOnePay;
 
-use Omnipay\Common\AbstractGateway;
+use League\Omnipay\Common\AbstractGateway;
 
 /**
  * OnePay Noi Dia Class

@@ -1,7 +1,7 @@
 <?php
 namespace Nilead\OmniOnePay\Message;
 
-use Omnipay\Common\Message\RedirectResponseInterface;
+use League\Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * NoiDia Purchase Response

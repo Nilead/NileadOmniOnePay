@@ -2,7 +2,7 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use Omnipay\Common\CreditCard;
+use League\Omnipay\Common\CreditCard;
 use Omnipay\Tests\TestCase;
 
 class QuocTeFetchRequestTest extends TestCase
