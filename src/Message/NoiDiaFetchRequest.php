@@ -35,9 +35,13 @@ class NoiDiaFetchRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->request('post', $this->getEndpoint(), [], json_encode($data)); // method POST
+        $httpResponse = $this->httpClient->request(
+            'post',
+            $this->getEndpoint(),
+            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            http_build_query($data, '', '&')
+        );
 
         return $this->response = new FetchResponse($this, $httpResponse->getBody());
     }
-
 }

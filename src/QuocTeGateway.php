@@ -2,6 +2,8 @@
 
 namespace Nilead\OmniOnePay;
 
+use Nilead\PaymentComponent\Model\TransactionContextInterface;
+
 /**
  * OnePay Quoc Te Class
  *
@@ -14,8 +16,15 @@ class QuocTeGateway extends NoiDiaGateway
         return 'OnePay Quoc Te';
     }
 
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = array(), TransactionContextInterface $transactionContext = null)
     {
+        if ($transactionContext) {
+            $request = $transactionContext->getHttpRequest();
+
+            $parameters['locale'] = $request->getLocale();
+            $parameters['clientIp'] = $request->getClientIp();
+        }
+
         return $this->createRequest('\Nilead\OmniOnePay\Message\QuocTePurchaseRequest', $parameters);
     }
 
