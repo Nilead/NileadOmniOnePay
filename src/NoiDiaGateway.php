@@ -2,7 +2,8 @@
 
 namespace Nilead\OmniOnePay;
 
-use Omnipay\Common\AbstractGateway;
+use League\Omnipay\Common\AbstractGateway;
+use Nilead\PaymentComponent\Model\TransactionContextInterface;
 
 /**
  * OnePay Noi Dia Class
@@ -88,8 +89,15 @@ class NoiDiaGateway extends AbstractGateway
         return $this->setParameter('testMode', $value);
     }
 
-    public function purchase(array $parameters = array())
+    public function purchase(array $parameters = array(), TransactionContextInterface $transactionContext = null)
     {
+        if ($transactionContext) {
+            $request = $transactionContext->getHttpRequest();
+
+            $parameters['locale'] = $request->getLocale();
+            $parameters['clientIp'] = $request->getClientIp();
+        }
+
         return $this->createRequest('\Nilead\OmniOnePay\Message\NoiDiaPurchaseRequest', $parameters);
     }
 

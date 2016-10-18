@@ -23,10 +23,10 @@ class QuocTePurchaseRequest extends AbstractRequest
             'vpc_MerchTxnRef' => date('YmdHis') . rand(),
             'vpc_OrderInfo' => "Order_" . $this->getTransactionId() . "_" . time(),
             'vpc_Amount' => $this->getAmount() * 100,
-            'vpc_Locale' => $this->httpRequest->getLocale(),
+            'vpc_Locale' => $this->getLocale()->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'AgainLink' => urlencode($this->httpRequest->server->get('HTTP_REFERER')), //$this->getCancelUrl(),
-            'vpc_TicketNo' => $this->httpRequest->getClientIp(),
+            'AgainLink' => urlencode($this->httpRequest->getHeader('referer')[0]), //$this->getCancelUrl(),
+            'vpc_TicketNo' => $this->getClientIp()
         ];
 
         return array_merge($data, $this->getBaseData());
@@ -38,5 +38,4 @@ class QuocTePurchaseRequest extends AbstractRequest
 
         return $this->response = new QuocTePurchaseResponse($this, $data);
     }
-
 }

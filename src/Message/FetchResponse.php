@@ -2,8 +2,8 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Common\Message\RequestInterface;
+use League\Omnipay\Common\Message\AbstractResponse;
+use League\Omnipay\Common\Message\RequestInterface;
 
 /**
  * FetchResponse
@@ -16,7 +16,7 @@ class FetchResponse extends AbstractResponse
         parse_str($data, $this->data);
     }
 
-    public function isSuccessful()
+    public function isCompleted()
     {
         if (isset($this->data['vpc_DRExists']) && $this->data['vpc_DRExists'] == 'Y' && isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0') {
             return true;

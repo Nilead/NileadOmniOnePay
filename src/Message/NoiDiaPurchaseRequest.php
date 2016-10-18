@@ -20,9 +20,9 @@ class NoiDiaPurchaseRequest extends AbstractRequest
             'vpc_MerchTxnRef' => date('YmdHis') . rand(),
             'vpc_OrderInfo' => "Order_" . $this->getTransactionId() . "_" . time(),
             'vpc_Amount' => $this->getAmount() * 100,
-            'vpc_Locale' => $this->httpRequest->getLocale(),
+            'vpc_Locale' => $this->getLocale()->getLocale(),
             'vpc_ReturnURL' => $this->getReturnUrl(),
-            'vpc_TicketNo' =>  $this->httpRequest->getClientIp(),
+            'vpc_TicketNo' => $this->getClientIp(),
             'vpc_Currency' => $this->getCurrency()
         ];
 
@@ -35,5 +35,4 @@ class NoiDiaPurchaseRequest extends AbstractRequest
 
         return $this->response = new NoiDiaPurchaseResponse($this, $data);
     }
-
 }

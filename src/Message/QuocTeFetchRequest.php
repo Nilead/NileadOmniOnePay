@@ -19,11 +19,12 @@ class QuocTeFetchRequest extends NoiDiaFetchRequest
 
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post(
+        $httpResponse = $this->httpClient->request(
+            'post',
             $this->getEndpoint(),
-            null,
-            $data //$this->encodeData($data)
-        )->send();
+            ['Content-Type' => 'application/x-www-form-urlencoded'],
+            http_build_query($data, '', '&')
+        );
 
         return $this->response = new FetchQuocTeResponse($this, $httpResponse->getBody());
     }
@@ -42,5 +43,4 @@ class QuocTeFetchRequest extends NoiDiaFetchRequest
 
         return implode('&', $output);
     }
-
 }
