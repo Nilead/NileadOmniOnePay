@@ -5,8 +5,8 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use League\Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use League\Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 abstract class AbstractRequest extends BaseAbstractRequest
 {

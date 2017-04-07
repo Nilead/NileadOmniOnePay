@@ -2,7 +2,7 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use League\Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 /**
  * NoiDia Fetch Request

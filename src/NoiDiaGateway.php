@@ -2,7 +2,7 @@
 
 namespace Nilead\OmniOnePay;
 
-use League\Omnipay\Common\AbstractGateway;
+use Omnipay\Common\AbstractGateway;
 use Nilead\PaymentComponent\Model\TransactionContextInterface;
 
 /**

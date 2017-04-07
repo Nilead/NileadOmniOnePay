@@ -2,8 +2,6 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use Guzzle\Http\Message\RequestInterface;
-
 /**
  * Quoc Te Complete Purchase Request
  */

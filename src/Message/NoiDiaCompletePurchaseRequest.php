@@ -2,7 +2,6 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use Guzzle\Http\Message\RequestInterface;
 /**
  * Noi Dia Complete Purchase Request
  */

@@ -2,8 +2,8 @@
 
 namespace Nilead\OmniOnePay\Message;
 
-use League\Omnipay\Common\Message\AbstractResponse;
-use League\Omnipay\Common\Message\RequestInterface;
+use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Response
@@ -40,7 +40,7 @@ class Response extends AbstractResponse
         }
     }
 
-    public function isCompleted()
+    public function isSuccessful()
     {
         if (isset($this->data['vpc_TxnResponseCode']) && $this->data['vpc_TxnResponseCode'] == '0') {
             $result = true;
